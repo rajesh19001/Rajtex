@@ -24,3 +24,30 @@ document.addEventListener("DOMContentLoaded", () => {
         slideObserver.observe(slide);
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. The Zoom-Through Loader Logic
+    const loader = document.getElementById('zoom-loader');
+    
+    // Wait 1.5 seconds so they see the text, then trigger the zoom
+    setTimeout(() => {
+        loader.classList.add('zoom-active');
+        
+        // Wait 2.5 seconds for the animation to completely finish, then remove the div so they can click the website
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 2500); 
+    }, 1500);
+
+    // 2. The Scroll Reveal Logic (Keep your existing observer code below)
+    const slides = document.querySelectorAll('.slide');
+    const observerOptions = { threshold: 0.2 };
+    const slideObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, observerOptions);
+
+    slides.forEach(slide => { slideObserver.observe(slide); });
+});
