@@ -105,3 +105,69 @@ nav a:hover { color: var(--secondary); }
     .about-grid, .edu-container, .skills-container { grid-template-columns: 1fr; flex-direction: column; }
     .hero-content h1 { font-size: 3rem; }
 }
+/* --- 3D ZOOM-THROUGH ANIMATION --- */
+#zoom-loader {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background: #1a252c; 
+    z-index: 9999;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden; 
+    perspective: 1000px; /* Enables 3D space */
+}
+
+/* The Fabric Grid */
+.weave-tunnel {
+    position: absolute; 
+    width: 200vw; 
+    height: 200vh;
+    /* Creates a dense warp/weft visual */
+    background-image: 
+        linear-gradient(90deg, rgba(212, 175, 55, 0.3) 2px, transparent 2px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.15) 2px, transparent 2px);
+    background-size: 30px 30px;
+    transform-origin: center center;
+    
+    /* The magic transition settings */
+    transition: transform 2.5s cubic-bezier(0.7, 0, 0.3, 1), opacity 2s ease-in;
+}
+
+.loader-text-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    transition: transform 2s ease-in, opacity 1.5s ease-in;
+}
+
+.loader-title {
+    color: #d4af37; 
+    font-size: 5rem; 
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.loader-subtitle {
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 10px;
+    letter-spacing: 3px;
+}
+
+/* --- THE TRIGGER CLASSES (Fired by JavaScript) --- */
+.zoom-active .weave-tunnel {
+    /* Zooms the fabric 80x its size so you go "through" a tiny square */
+    transform: scale(80) translateZ(100px); 
+    opacity: 0;
+}
+
+.zoom-active .loader-text-container {
+    /* Throws the text forward at the screen */
+    transform: scale(5) translateZ(400px);
+    opacity: 0;
+}
